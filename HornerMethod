@@ -1,0 +1,19 @@
+from sympy import symbols, diff
+# pip install sympy
+
+def horner_rule(polynomial, t0):
+    n = len(polynomial)
+    b = [0] * (n - 1)
+    x = symbols('x')
+    polynomial_exp = sum(coeff * x ** (n - i - 1) for i, coeff in enumerate(polynomial))
+    derivative_exp = diff(polynomial_exp, x)
+    p_t0 = polynomial_exp.subs(x, t0)
+    p_derivative_t0 = derivative_exp.subs(x, t0)
+    return b, p_t0, p_derivative_t0
+
+
+poly = [3, -6, 5, -2]  
+t0 = 2  
+b, p_t0, p_deriv_t0 = horner_rule(poly, t0)
+print(f"The polynomial at t={t0} is {p_t0}")
+print(f"The derivative at t={t0} is {p_deriv_t0}")
